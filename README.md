@@ -115,7 +115,7 @@ This project is designed to reduce hallucinations by grounding answers in retrie
 
 Even so, it is still a lightweight RAG system, not a guaranteed source of truth. Users should review the linked Wikipedia sources for important or sensitive questions.
 
-## Current Improvements Over a Basic RAG App
+## Current Improvements Over a RAG App
 
 - Better chunk cleaning and overlap
 - More conservative topic matching
@@ -159,7 +159,7 @@ git push -u origin main
 
 ## Author Notes
 
-This project is intended as a practical RAG demo focused on:
+This project is intended as a practical RAG focused on:
 
 - grounded answers
 - transparent source attribution
