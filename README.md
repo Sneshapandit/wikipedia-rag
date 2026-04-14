@@ -2,7 +2,7 @@
 
 A lightweight Retrieval-Augmented Generation (RAG) chatbot built with Python, FAISS, Hugging Face models, Wikipedia, and Streamlit.
 
-The app retrieves relevant Wikipedia content, builds a grounded answer from those sources, and shows clickable source links so users can verify the response directly on Wikipedia.
+The model retrieves relevant Wikipedia content, builds a grounded answer from those sources, and shows clickable source links so users can verify the response directly on Wikipedia.
 
 ## Features
 
@@ -137,25 +137,6 @@ Even so, it is still a lightweight RAG system, not a guaranteed source of truth.
 - Add evaluation tests for retrieval quality
 - Add reranking for better source selection
 - Add richer answer cards and follow-up question suggestions
-
-## Sharing on GitHub
-
-Before pushing to GitHub:
-
-- keep `venv/` out of version control
-- keep `__pycache__/` out of version control
-- do not commit machine-specific secrets or cache files
-
-Suggested commands:
-
-```powershell
-git init
-git add .
-git commit -m "Add Wikipedia RAG chat assistant"
-git branch -M main
-git remote add origin <your-repo-url>
-git push -u origin main
-```
 
 ## Author Notes
 
