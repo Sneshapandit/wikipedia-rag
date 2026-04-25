@@ -1,6 +1,6 @@
 # Wikipedia RAG Chat Assistant
 
-A lightweight Retrieval-Augmented Generation (RAG) chatbot built with Python, FAISS, Hugging Face models, Wikipedia, and Streamlit.
+A lightweight Retrieval-Augmented Generation (RAG) chatbot built with Python, FAISS, a sentence-transformer embedder, Wikipedia, and Streamlit.
 
 The model retrieves relevant Wikipedia content, builds a grounded answer from those sources, and shows clickable source links so users can verify the response directly on Wikipedia.
 
@@ -24,7 +24,6 @@ The model retrieves relevant Wikipedia content, builds a grounded answer from th
 - Streamlit
 - FAISS
 - sentence-transformers
-- Hugging Face Transformers
 - Wikipedia API wrapper
 
 ## Project Structure
@@ -97,9 +96,10 @@ http://localhost:8501
 
 ## First Run Notes
 
-- The first run may take a little time because Hugging Face models must be downloaded.
+- The first run may take a little time because the embedding model must be downloaded once.
 - The app also needs internet access to fetch Wikipedia content.
-- After the first successful model download, later runs are faster because the models are cached locally.
+- After the first successful model download, later runs are faster because the model is cached locally.
+- A Hugging Face line such as `embeddings.position_ids | UNEXPECTED` is a harmless load warning for this model and can be ignored.
 
 ## Example Questions
 

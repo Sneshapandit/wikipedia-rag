@@ -100,7 +100,12 @@ def render_confidence(confidence, confidence_score):
     st.caption(f"Match quality: {confidence} ({confidence_score:.2f})")
 
 
-@st.cache_resource
+@st.cache_resource(
+    show_spinner=(
+        "Loading the embedding model and starter Wikipedia topics. "
+        "The first run can take about a minute."
+    )
+)
 def initialize_rag():
     return load_data()
 
@@ -123,6 +128,7 @@ if "messages" not in st.session_state:
 
 st.title("Wikipedia Chat Assistant")
 st.caption("Simple answers based on Wikipedia")
+st.caption("First run is slower because the app downloads a small model once and caches it locally.")
 
 try:
     rag = initialize_rag()

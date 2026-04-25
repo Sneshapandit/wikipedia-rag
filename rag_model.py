@@ -3,13 +3,12 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 from functools import lru_cache
-from typing import Dict, List, Sequence, Tuple
+from typing import Dict, List, Sequence
 
 import faiss
 import numpy as np
 import wikipedia
 from sentence_transformers import SentenceTransformer
-from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 
 DEFAULT_TOPICS = [
     "Artificial Intelligence",
@@ -17,7 +16,6 @@ DEFAULT_TOPICS = [
     "Deep Learning",
 ]
 EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
-GENERATOR_MODEL_NAME = "google/flan-t5-base"
 DEFAULT_TOP_K = 3
 MAX_CONTEXT_CHUNKS = 5
 MAX_NEW_TOKENS = 192
@@ -53,10 +51,8 @@ class WikipediaRAG:
     def __init__(
         self,
         embedding_model_name: str = EMBEDDING_MODEL_NAME,
-        generator_model_name: str = GENERATOR_MODEL_NAME,
     ) -> None:
         self.embedding_model = self._load_embedding_model(embedding_model_name)
-        self.tokenizer, self.generator_model = self._load_generator_model(generator_model_name)
         self.index: faiss.IndexFlatIP | None = None
         self.chunks: List[Dict[str, str]] = []
         self.indexed_topics: set[str] = set()
@@ -64,26 +60,12 @@ class WikipediaRAG:
     @staticmethod
     def _load_embedding_model(model_name: str) -> SentenceTransformer:
         try:
-            return SentenceTransformer(model_name)
+            return SentenceTransformer(model_name, device="cpu")
         except Exception as exc:
             raise RuntimeError(
                 "Unable to load the embedding model. Make sure the model is available "
                 "locally or that this machine can reach Hugging Face."
             ) from exc
-
-    @staticmethod
-    def _load_generator_model(
-        model_name: str,
-    ) -> Tuple[AutoTokenizer, AutoModelForSeq2SeqLM]:
-        try:
-            tokenizer = AutoTokenizer.from_pretrained(model_name)
-            model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
-        except Exception as exc:
-            raise RuntimeError(
-                "Unable to load the FLAN-T5 generator. Make sure the model is available "
-                "locally or that this machine can reach Hugging Face."
-            ) from exc
-        return tokenizer, model
 
     @staticmethod
     def clean_text(text: str) -> str:
